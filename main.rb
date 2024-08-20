@@ -1,3 +1,7 @@
 require_relative("lib/code")
+require_relative("lib/game")
+require_relative("lib/guess")
 
-code = Code.new()
+game = Game.new()
+
+game.feedback_input()

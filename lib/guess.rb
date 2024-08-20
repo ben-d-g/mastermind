@@ -26,4 +26,8 @@ class Guess
   def get_guess()
     return @code
   end
+
+  def guess_made?()
+    return @guess_made
+  end
 end

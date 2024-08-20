@@ -1,7 +1,6 @@
 class Code
   def initialize()
     @code = generate()
-    puts(@code)
   end
 
   def generate()
@@ -9,5 +8,9 @@ class Code
     randomString = ""
     1.upto(4){randomString += chars.sample}
     return randomString
+  end
+
+  def get_code()
+    return @code
   end
 end
