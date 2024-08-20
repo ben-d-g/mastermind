@@ -12,13 +12,7 @@ class Guess
     end
   end
 
-  def make_guess()
-    puts("Enter guess >>")
-    guess_input = gets.chomp
-    until validate(guess_input)
-      puts("Enter a guess of four numbers between 1 and 6 >>")
-      guess_input = gets.chomp
-    end
+  def make_guess(guess_input)
     @code = guess_input
     @guess_made = true
   end

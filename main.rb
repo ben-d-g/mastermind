@@ -4,4 +4,4 @@ require_relative("lib/guess")
 
 game = Game.new()
 
-game.feedback_input()
+game.play()
