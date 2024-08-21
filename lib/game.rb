@@ -32,11 +32,31 @@ class Game
     return input
   end
 
-  def generate_guess()
-    chars = ["1", "2", "3", "4", "5", "6"]
-    randomString = ""
-    1.upto(4){randomString += chars.sample}
-    return randomString
+  def generate_guess(turn)
+    if turn == 0
+      chars = ["1", "2", "3", "4", "5", "6"]
+      randomString = ""
+      1.upto(4){randomString += chars.sample}
+      return randomString
+    else
+      chars = ["1", "2", "3", "4", "5", "6"]
+      0.upto(7) do |guess_index|
+        0.upto(3) do |char_index|
+          if @feedbacks[guess_index][char_index] == "!"
+            chars.delete(@guesses[guess_index].get_guess()[char_index])
+          end
+        end
+      end
+      guess_string = ""
+      0.upto(3) do |index|
+        if @feedbacks[turn - 1][index] == "."
+          guess_string += @guesses[turn - 1].get_guess()[index]
+        else
+          guess_string += chars.sample
+        end
+      end
+      return guess_string
+    end
   end
 
   def display_guesses()
@@ -72,14 +92,16 @@ class Game
   def play_computer_guessing()
     puts("Create your code!")
     @code = Code.new(gets.chomp)
+    turn = 0
     until @guesses.all? {|guess| guess.guess_made?()} or @guesses.any?{|guess| guess.get_guess() == @code.get_code()}
       puts()
       display_feedbacks()
       #find first unmade guess
       unmade_guess = @guesses.find{|guess| not guess.guess_made?()}
-      unmade_guess.make_guess(generate_guess())
+      unmade_guess.make_guess(generate_guess(turn))
       index = @feedbacks.find_index{|feedback| feedback == "----"}
       @feedbacks[index] = guess_feedback(unmade_guess, @code)
+      turn += 1
     end
     puts()
     display_feedbacks()
