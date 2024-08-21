@@ -60,6 +60,13 @@ class Game
       index = @feedbacks.find_index{|feedback| feedback == "----"}
       @feedbacks[index] = guess_feedback(unmade_guess, @code)
     end
+    puts()
+    display_feedbacks()
+    if @feedbacks[-1] == "...." or @feedbacks[-1] == "----"
+      puts("Well done! You got it !")
+    else
+      puts("Better luck next time!")
+    end
   end
 
   def play_computer_guessing()
@@ -73,6 +80,13 @@ class Game
       unmade_guess.make_guess(generate_guess())
       index = @feedbacks.find_index{|feedback| feedback == "----"}
       @feedbacks[index] = guess_feedback(unmade_guess, @code)
+    end
+    puts()
+    display_feedbacks()
+    if @feedbacks[-1] == "...." or @feedbacks[-1] == "----"
+      puts("The computer guessed it!")
+    else
+      puts("Well done! You stumped the computer!")
     end
   end
 
