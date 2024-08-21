@@ -1,14 +1,16 @@
+# frozen_string_literal: true
+
 class Guess
-  def initialize()
-    @code = "----"
+  def initialize
+    @code = '----'
     @guess_made = false
   end
 
   def validate(guess_input)
-    if guess_input.split("").all{|char| ["1", "2", "3", "4", "5", "6"].includes?(char)} and guess_input.length == 4
-      return true
+    if guess_input.split('').all { |char| %w[1 2 3 4 5 6].includes?(char) } && (guess_input.length == 4)
+      true
     else
-      return false
+      false
     end
   end
 
@@ -17,11 +19,11 @@ class Guess
     @guess_made = true
   end
 
-  def get_guess()
-    return @code
+  def get_guess
+    @code
   end
 
-  def guess_made?()
-    return @guess_made
+  def guess_made?
+    @guess_made
   end
 end

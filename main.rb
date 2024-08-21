@@ -1,7 +1,9 @@
-require_relative("lib/code")
-require_relative("lib/game")
-require_relative("lib/guess")
+# frozen_string_literal: true
 
-game = Game.new()
+require_relative('lib/code')
+require_relative('lib/game')
+require_relative('lib/guess')
 
-game.menu()
+game = Game.new
+
+game.menu
