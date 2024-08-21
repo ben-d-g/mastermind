@@ -23,13 +23,20 @@ class Game
   end
 
   def guess_input()
-    puts("Make your guess >>")
+    puts("Enter your code >>")
     input = gets.chomp
     until input.split("").all?{|char| ["1","2","3","4","5","6"].include?(char)} and input.length == 4
-      puts("Your guess must be a string of 4 integers between 1 and 6 >>")
+      puts("Your code must be a string of 4 integers between 1 and 6 >>")
       input = gets.chomp
     end
     return input
+  end
+
+  def generate_guess()
+    chars = ["1", "2", "3", "4", "5", "6"]
+    randomString = ""
+    1.upto(4){randomString += chars.sample}
+    return randomString
   end
 
   def display_guesses()
@@ -40,9 +47,9 @@ class Game
     @feedbacks.each{|feedback| puts feedback}
   end
 
-  def play()
+  def play_human_guessing()
     #game is done when all guesses have been made
-    until @guesses.all? {|guess| guess.guess_made?()}
+    until @guesses.all? {|guess| guess.guess_made?()} or @guesses.any?{|guess| guess.get_guess() == @code.get_code()}
       puts()
       display_feedbacks()
       #find first unmade guess
@@ -52,6 +59,33 @@ class Game
       #ungiven_feedback = guess_feedback(unmade_guess, @code)
       index = @feedbacks.find_index{|feedback| feedback == "----"}
       @feedbacks[index] = guess_feedback(unmade_guess, @code)
+    end
+  end
+
+  def play_computer_guessing()
+    puts("Create your code!")
+    @code = Code.new(gets.chomp)
+    until @guesses.all? {|guess| guess.guess_made?()} or @guesses.any?{|guess| guess.get_guess() == @code.get_code()}
+      puts()
+      display_feedbacks()
+      #find first unmade guess
+      unmade_guess = @guesses.find{|guess| not guess.guess_made?()}
+      unmade_guess.make_guess(generate_guess())
+      index = @feedbacks.find_index{|feedback| feedback == "----"}
+      @feedbacks[index] = guess_feedback(unmade_guess, @code)
+    end
+  end
+
+  def menu()
+    puts("Do you want to:\n1 - Guess the code\n2 - make the code?")
+    choice = gets.chomp
+    until choice == "1" or choice == "2"
+      choice = gets.chomp
+    end
+    if choice == "1"
+      play_human_guessing()
+    else
+      play_computer_guessing()
     end
   end
 end
